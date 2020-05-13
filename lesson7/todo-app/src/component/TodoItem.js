@@ -5,43 +5,32 @@ import {ReactComponent as TrashIcon} from '../img/send-to-trash.svg';
 import {ReactComponent as ImportantEmptyIcon} from '../img/star-empty.svg';
 import {ReactComponent as ImportantFullIcon} from '../img/star-full.svg';
 
-export class TodoItem extends React.PureComponent {
+export default class TodoItem extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMouseOver: false,
+        };
+    }
 
-    state = {
-        isMouseOver: false,
-    };
-
-    static propTypes = {
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        isFinished: PropTypes.bool.isRequired,
-        onToggleIsFinished: PropTypes.func.isRequired,
-        isImportant: PropTypes.bool.isRequired,
-        onToggleIsImportant: PropTypes.func.isRequired,
-        onDelete: PropTypes.func.isRequired,
-    };
-
-    handleOnDelete = () => {
+    handleOnDelete = (event) => {
+        event.stopPropagation();
         const {id, onDelete} = this.props;
-        console.log('TodoItem.handleOnDelete.id:', id);
         onDelete(id);
     };
 
     handleOnToggleIsFinished = () => {
         const {id, onToggleIsFinished} = this.props;
-        console.log('TodoItem.handleOnToggleIsFinished.id:', id);
         onToggleIsFinished(id);
     };
 
     handleOnToggleIsImportant = (event) => {
-        //дефолтное поведение, когда у тебя есть обработчик какого-то события(например клика) у родителя и у ребенка,
-        // то сначала вызовется обработчик у ребенка, затем у родителя, и так до самого корня дерева
+        // дефолтное поведение, когда у тебя есть обработчик какого-то события(например клика)
+        // у родителя и у ребенка, то сначала вызовется обработчик у ребенка, затем у родителя,
+        // и так до самого корня дерева
         event.stopPropagation();
-        const {id, onToggleIsImportant, isImportant} = this.props;
-        console.log('TodoItem.handleOnToggleIsImportant.id:', id);
-        console.log('TodoItem.handleOnToggleIsImportant.isImportant1:', isImportant);
+        const {id, onToggleIsImportant} = this.props;
         onToggleIsImportant(id);
-        console.log('TodoItem.handleOnToggleIsImportant.isImportant2:', isImportant);
     };
 
     handleMouseOver = () => {
@@ -56,27 +45,43 @@ export class TodoItem extends React.PureComponent {
         });
     };
 
+    handleKeyPress = (event) => {
+        // 13 - Кпонка Enter
+        if (event.charCode === 13 || event.charCode === 32) {
+            this.handleOnToggleIsFinished();
+        }
+    };
+
     render() {
         const {title, isFinished, isImportant} = this.props;
         const {isMouseOver} = this.state;
         return (
-            <div className="todo-item"
-                 onClick={this.handleOnToggleIsFinished}
-                 onMouseEnter={this.handleMouseOver}
-                 onMouseLeave={this.handleMouseOut}>
-                {isImportant && (<ImportantFullIcon className="icon"/>)}
-                <li className={"todo-text" + (isFinished ? " todo-text-strike" : "") + (isImportant ? " todo-text-important" : "")}>
+            <div
+                role="button"
+                tabIndex="0"
+                className="todo-item"
+                onClick={this.handleOnToggleIsFinished}
+                onMouseEnter={this.handleMouseOver}
+                onMouseLeave={this.handleMouseOut}
+                onKeyPress={this.handleKeyPress}
+            >
+                {isImportant && (<ImportantFullIcon className="icon" />)}
+                <li
+                    className={`todo-text${
+                        isFinished ? ' todo-text-strike' : ''
+                    }${isImportant ? ' todo-text-important' : ''}`}
+                >
                     {title}
                 </li>
                 {isMouseOver && (
                     <div>
                         <button type="button" onClick={this.handleOnToggleIsImportant} className="button">
-                            {isImportant ?
-                                <ImportantEmptyIcon className="icon"/> :
-                                <ImportantFullIcon className="icon"/>}
+                            {isImportant
+                                ? <ImportantEmptyIcon className="icon" />
+                                : <ImportantFullIcon className="icon" />}
                         </button>
                         <button type="button" onClick={this.handleOnDelete} className="button">
-                            <TrashIcon className="icon"/>
+                            <TrashIcon className="icon" />
                         </button>
                     </div>
                 )}
@@ -84,3 +89,13 @@ export class TodoItem extends React.PureComponent {
         );
     }
 }
+
+TodoItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    isFinished: PropTypes.bool.isRequired,
+    onToggleIsFinished: PropTypes.func.isRequired,
+    isImportant: PropTypes.bool.isRequired,
+    onToggleIsImportant: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+};

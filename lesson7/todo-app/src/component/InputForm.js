@@ -2,15 +2,13 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {ReactComponent as TodoIcon} from '../img/todo-icon.svg';
 
-export class InputForm extends PureComponent {
-
-    state = {
-        title: '',
-    };
-
-    static propTypes = {
-        onSubmit: PropTypes.func.isRequired,
-    };
+export default class InputForm extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+        };
+    }
 
     handleOnSubmit = (event) => {
         // по умолчанию сабмит формы перезагружает страницу
@@ -19,14 +17,11 @@ export class InputForm extends PureComponent {
         event.preventDefault();
         const {onSubmit} = this.props;
         const {title} = this.state;
-        console.log('InputForm.handleSubmit');
-        console.log('InputForm.handleSubmit', 'this.state.title', this.state.title);
         onSubmit(title);
         this.setState({title: ''});
     };
 
     handleOnChange = (event) => {
-        console.log('handleOnChange');
         this.setState({[event.target.name]: event.target.value});
     };
 
@@ -36,7 +31,7 @@ export class InputForm extends PureComponent {
 
         return (
             <form onSubmit={this.handleOnSubmit} className="form-input">
-                <TodoIcon className="input-icon"/>
+                <TodoIcon className="input-icon" />
                 <input
                     type="text"
                     name="title"
@@ -51,3 +46,7 @@ export class InputForm extends PureComponent {
         );
     }
 }
+
+InputForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
