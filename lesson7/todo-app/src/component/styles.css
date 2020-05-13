@@ -1,0 +1,114 @@
+.app-container {
+    margin: 0 auto;
+    max-width: 640px;
+    border: revert;
+    background: #eaf6ff;
+}
+
+.app-title {
+    font-family: Formular, sans-serif;
+    font-weight: normal;
+    font-size: 24px;
+    margin: 0 auto;
+}
+
+.search {
+    display: inline-flex;
+    border: 1px solid black;
+    border-radius: 1px;
+    padding: 2px;
+    background: silver;
+}
+
+.search:hover {
+    color: #ccc;
+    background: aliceblue;
+    outline: 1px solid aquamarine;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    order: -1;
+    background: inherit;
+}
+
+.search-field {
+    width: 300px;
+    border: 0;
+    background: transparent;
+}
+
+.search-field:focus {
+    outline: 1px solid red;
+}
+
+.form-input {
+    border: 1px solid;
+    border-radius: 2px;
+    padding: 2px;
+    width: auto;
+    font-size: 18px;
+    background: white;
+}
+
+.form-input:hover{
+    outline: 2px groove blue;
+}
+
+.input-icon {
+    height:20px;
+    width:20px;
+}
+
+.input-field {
+    border: 1px dotted;
+    width: 520px;
+}
+
+.input-button {
+    width: 90px;
+}
+
+.todo-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.todo-item {
+    border: 1px solid #0a27ff;
+    margin: 5px;
+    width: inherit;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-item:hover{
+    outline: 3px double;
+}
+
+.todo-text {
+    word-break: break-all;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.todo-text-important {
+    font-weight: bold;
+}
+
+.todo-text-strike {
+    text-decoration: line-through;
+    color: lightskyblue;
+}
+
+.button {
+    background: unset;
+    cursor: pointer;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+}
