@@ -29,6 +29,8 @@ const style = {
     },
 
     pageContent: {
+        marginTop: 10,
+        border: "1px dashed black",
         display: "flex",
         justifyContent: "center",
     },
