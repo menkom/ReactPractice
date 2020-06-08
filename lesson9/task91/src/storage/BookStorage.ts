@@ -14,5 +14,5 @@ export const BookStorage: Array<IBook> = [
 ]
 
 export function getBookStorage(id: string): IBook {
-    return BookStorage.filter(book => book.id === id)[0];
+    return BookStorage.find(book => book.id === id) as IBook;
 }

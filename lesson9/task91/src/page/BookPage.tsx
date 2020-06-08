@@ -1,11 +1,13 @@
 import React from 'react';
 import Header from "../header/Header";
 import {getBookStorage} from "../storage/BookStorage";
-import {RouteComponentProps} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {IMatchParams} from '../core/IMatchParams';
 
 interface IBookPageProps extends RouteComponentProps<IMatchParams> {
+    isLoggedIn: boolean;
 
+    toggleLogin(): void;
 }
 
 interface IBookPageState {
@@ -14,12 +16,15 @@ interface IBookPageState {
     description?: string;
 }
 
-export class BookPage extends React.Component<IBookPageProps, IBookPageState> {
+class BookPage extends React.Component<IBookPageProps, IBookPageState> {
 
     state: IBookPageState = {};
 
     componentDidMount() {
-        const {id} = this.props.match.params;
+
+        const {match} = this.props;
+        const {params} = match;
+        const {id} = params;
         if (id !== undefined) {
             this.setState({...getBookStorage(id)})
         }
@@ -27,9 +32,11 @@ export class BookPage extends React.Component<IBookPageProps, IBookPageState> {
 
     render() {
         const {name, description} = this.state;
+        console.log('BookPage:', this.props);
+
         return (
             <div>
-                <Header/>
+                <Header {...this.props}/>
                 <div>
                     Name: {name}<p/>
                     Description: {description}<p/>
@@ -37,3 +44,5 @@ export class BookPage extends React.Component<IBookPageProps, IBookPageState> {
             </div>);
     }
 }
+
+export default withRouter(BookPage);
