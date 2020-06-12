@@ -6,6 +6,11 @@ const addTodo = value => ({
   payload: value
 });
 
+const deleteTodo = value => ({
+  type: 'DELETE_TODO',
+  payload: value,
+});
+
 export {
-  addTodo
+  addTodo, deleteTodo
 };

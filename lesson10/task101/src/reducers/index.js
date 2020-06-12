@@ -11,6 +11,11 @@ const todos = (state = initialValues, action) => {
         ...state,
         todos: [...state.todos, action.payload]
       }
+      case 'DELETE_TODO':
+          return {
+              ...state,
+              todos: state.todos.filter(item => item.id !== action.payload),
+          }
     default:
       return state;
   }

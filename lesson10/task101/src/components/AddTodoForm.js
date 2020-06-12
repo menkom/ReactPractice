@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {addTodo} from '../actions';
+import generateId from "../util/utils";
 
 class AddTodoForm extends Component {
   state={
@@ -15,7 +16,7 @@ class AddTodoForm extends Component {
     const {todo} = this.state;
     const result = {
       text: todo,
-      id: Math.floor((Math.random() * 100) + 1),
+      id: generateId(),
       complete: false
     };
 
