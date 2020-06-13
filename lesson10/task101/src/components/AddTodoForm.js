@@ -1,53 +1,49 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addTodo} from '../actions';
+import {addTodo, editNewTodo} from '../actions';
 import generateId from "../util/utils";
 
 class AddTodoForm extends Component {
-  state={
-    todo: ''
-  }
 
-  handleChange = e => this.setState({[e.target.name]: e.target.value});
-
+    handleChange = e => {
+        this.props.editNewTodo(e.target.value);
+    };
 
   handleSubmit = e => {
     e.preventDefault();
-    const {todo} = this.state;
+    const {text} = this.props;
     const result = {
-      text: todo,
+      text: text,
       id: generateId(),
       complete: false
     };
 
-    // this.props.toggleTodo(result);
-    // this.props.dispatch(addTodo(result));
     this.props.addTodo(result);
-    this.setState({todo: ''})
   }
 
-
   render() {
-    const {todo} = this.state;
-    console.log(1, this.props);
+    const {text} = this.props;
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <input name="todo" value={todo} onChange={this.handleChange} type="text"/>
+        <input name="todo" value={text} onChange={this.handleChange} type="text"/>
         <button type="submit">Add</button>
       </form>
     )
   }
 }
 
-// const mapDispatchToProps = (dispatch, onwProps) => {
-//   console.log(onwProps);
-//   return {
-//     toggleTodo: (value) => dispatch(addTodo(value))
-//   }
-// };
+const mapStateToProps = (state) => {
+    return {
+        text: state.newTodoText,
+    }
+}
 
-// export default connect(null, mapDispatchToProps)(AddTodoForm);
-//export default connect()(AddTodoForm);
-export default connect(null, {addTodo})(AddTodoForm);
-//export default connect(null, {addTodo: addTodo})(AddTodoForm);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodo: (todoItem) => dispatch(addTodo(todoItem)),
+        editNewTodo: (text) => dispatch(editNewTodo(text)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodoForm);

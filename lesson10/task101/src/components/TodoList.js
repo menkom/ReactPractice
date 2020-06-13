@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Todo from './Todo';
+import {deleteTodo} from "../actions";
 
 class TodoList extends Component {
   render() {
@@ -8,21 +9,25 @@ class TodoList extends Component {
     return (
       <div>
         {todos.map((todo) => (
-          <Todo key={todo.id} {...todo} />
+          <Todo key={todo.id} {...todo} deleteTodo={this.props.doDelete} />
         ))}
       </div>
     )
   }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     todos: state.todos
-//   };
-// };
-
-//export default connect(mapStateToProps)(TodoList);
-export default connect(
-  (state) => ({
+// Passing data from Redux store to TodoList in props
+const mapStateToProps = (state) => {
+  return {
     todos: state.todos
-}))(TodoList);
+  };
+};
+
+// Passing methods from Redux store to TodoList in props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    doDelete: (todoId)=>dispatch(deleteTodo(todoId))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
