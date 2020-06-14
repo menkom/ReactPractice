@@ -1,6 +1,6 @@
 import React from 'react';
-import {UserList} from "./components/UserList";
-import {RetrieveData} from "./components/RetrieveData";
+import UserList from "./components/UserList";
+import RetrieveData from "./components/RetrieveData";
 
 function App() {
     return (
