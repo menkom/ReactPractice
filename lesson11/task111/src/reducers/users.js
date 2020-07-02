@@ -27,7 +27,7 @@ const users = (state = initialState, action) => {
     }
 };
 
-//actions
+//action creator with thunk
 const updateAllUsers = () => (dispatch) => {
     axios.get('https://jsonplaceholder.typicode.com/users')
         // .then(res => console.log(res.data))
