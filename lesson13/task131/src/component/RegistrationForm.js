@@ -1,6 +1,7 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
 import {
+    commonValidation,
     maxLength,
     minLength4,
     minNumber,
@@ -86,6 +87,7 @@ class RegistrationForm extends React.Component {
 export default reduxForm(
     {
         form: 'simpleForm',
+        validate: commonValidation,
         asyncValidate: uniqueEmail,
         asyncChangeFields: ['email']
     }

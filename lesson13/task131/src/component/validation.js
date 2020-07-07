@@ -30,4 +30,19 @@ function uniqueEmail(values) {
         )
 }
 
-export {required, minLength4, maxLength, number, noSpecialSymbols, minNumber, uniqueEmail};
+const commonValidation = (values) => {
+    const errors = {};
+    if (!values.name) {
+        errors.name = 'Required';
+    } else {
+        errors.name = minimalLength(4)(values.name);
+    }
+    if (!values.surname) {
+        errors.surname = 'Required';
+    } else if (values.surname.length < 4) {
+        errors.surname = 'Must be 4 characters or more';
+    }
+    return errors;
+};
+
+export {required, minLength4, maxLength, number, noSpecialSymbols, minNumber, uniqueEmail, commonValidation};
