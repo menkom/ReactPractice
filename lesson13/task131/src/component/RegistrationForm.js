@@ -1,6 +1,14 @@
 import React from 'react';
 import {Field, reduxForm} from "redux-form";
-import {maxLength, minLength4, minNumber, noSpecialSymbols, number, required, uniqueEmail} from "./validation";
+import {
+    maxLength,
+    minLength4,
+    minNumber,
+    noSpecialSymbols,
+    number,
+    required,
+    uniqueEmail
+} from "./validation";
 import InputField from "./InputField";
 
 class RegistrationForm extends React.Component {
@@ -16,7 +24,6 @@ class RegistrationForm extends React.Component {
                     label="Name"
                     type="text"
                     component={InputField}
-                    validate={[required, minLength4]}
                     placeholder="name"
                 />
                 <Field
@@ -24,7 +31,6 @@ class RegistrationForm extends React.Component {
                     label="Surname"
                     type="text"
                     component={InputField}
-                    validate={[required, minLength4]}
                     placeholder="surname"
                 />
                 <Field
@@ -41,7 +47,7 @@ class RegistrationForm extends React.Component {
                     type="text"
                     // component="input"
                     component={InputField}
-                    validate={[required, uniqueEmail]}
+                    validate={[required]}
                     placeholder="email"
                 />
                 <Field
@@ -56,7 +62,6 @@ class RegistrationForm extends React.Component {
                 <Field
                     name="gender"
                     label="Gender"
-                    // type="checkbox"
                     component="select"
                     // component={InputField}
                     validate={required}
@@ -81,5 +86,7 @@ class RegistrationForm extends React.Component {
 export default reduxForm(
     {
         form: 'simpleForm',
+        asyncValidate: uniqueEmail,
+        asyncChangeFields: ['email']
     }
 )(RegistrationForm);

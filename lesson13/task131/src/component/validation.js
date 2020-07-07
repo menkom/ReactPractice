@@ -18,29 +18,16 @@ function maximalLength(maxValue) {
     }
 }
 
-// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-// const uniqueEmail = value => {
-//     const startTime = new Date();
-//     console.log('uniqueEmail:', startTime)
-//     return sleep(2000)
-//         .then(() => {
-//             console.log("then:", startTime)
-//             return value === 'mail'
-//                 ? "some string"
-//                 : undefined
-//         })
-//         .catch(error => "error")
-// };
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-//timeout check need correction
-function uniqueEmail(value) {
-    setTimeout(
-        () =>
-            (value === 'mail'
-                    ? "some string"
-                    : undefined
-            ),
-        2000);
+function uniqueEmail(values) {
+    return sleep(2000)
+        .then(
+            () => {
+                if (values.email === 'mail')
+                    throw {email: `Email ${values.email} is already registered`}
+            }
+        )
 }
 
 export {required, minLength4, maxLength, number, noSpecialSymbols, minNumber, uniqueEmail};
